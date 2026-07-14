@@ -1,0 +1,17 @@
+# Go
+backend/bin/
+backend/chronova.db*
+backend/*.db
+backend/*.db-*
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+frontend/.vite/
+
+# Misc
+.DS_Store
+*.log
