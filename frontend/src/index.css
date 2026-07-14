@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Variable", "Noto Sans JP Variable", system-ui, -apple-system, sans-serif;
+
+  /* Dark-first Linear-like palette */
+  --color-app: #0f1011;
+  --color-panel: #16171a;
+  --color-raise: #1b1d21;
+  --color-hover: #1e2024;
+  --color-active: #25272c;
+  --color-edge: #26282d;
+  --color-edge-strong: #363940;
+  --color-ink: #e6e7e9;
+  --color-dim: #8b8d93;
+  --color-faint: #63666d;
+  --color-accent: #5e6ad2;
+  --color-accent-hover: #6e79d6;
+  --color-danger: #e5534b;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-app text-ink font-sans antialiased;
+  font-size: 13px;
+  overscroll-behavior: none;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+
+/* Slim Linear-like scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-edge-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-edge-strong);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 70%, transparent);
+  outline-offset: 1px;
+}
+
+input,
+textarea {
+  @apply placeholder:text-faint;
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes dialog-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes panel-in {
+  from { opacity: 0.4; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.anim-overlay { animation: overlay-in 120ms ease-out; }
+.anim-dialog { animation: dialog-in 140ms ease-out; }
+.anim-pop { animation: pop-in 100ms ease-out; }
+.anim-panel { animation: panel-in 160ms ease-out; }
+.anim-toast { animation: toast-in 140ms ease-out; }
