@@ -55,7 +55,7 @@ function ProjectItem({ project }: { project: Project }) {
   const deleteProject = useDeleteProject()
 
   return (
-    <div className="group relative">
+    <div className="group relative" data-testid="project-item">
       <NavLink
         to={`/projects/${project.id}`}
         className={({ isActive }) =>

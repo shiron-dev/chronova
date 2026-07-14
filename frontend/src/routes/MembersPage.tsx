@@ -25,7 +25,10 @@ function MemberRow({
   onDelete: () => void
 }) {
   return (
-    <div className="group flex h-12 items-center gap-3 border-b border-edge/60 px-6">
+    <div
+      data-testid="member-row"
+      className="group flex h-12 items-center gap-3 border-b border-edge/60 px-6"
+    >
       <MemberAvatar member={member} size={26} />
       <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-ink">
         {member.name}

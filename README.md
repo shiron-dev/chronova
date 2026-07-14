@@ -36,11 +36,24 @@ make dev     # API (:8080) と Vite (:5173) を同時起動
 ブラウザで http://localhost:5173 を開きます。初回起動時にデモデータ(人間3名 + AIエージェント3体、プロジェクト3件、タスク16件)が自動投入されます。
 
 ```sh
-make test      # go vet + go test + フロントエンドビルド
+make test      # backend(go vet + go test) + frontend単体(vitest) + 本番ビルド
 make e2e       # Playwright e2e(サーバーは自動起動)
 make build     # 本番ビルド(backend/bin/server + frontend/dist)
 make db-reset  # DBを削除(次回起動時に再シード)
 ```
+
+## テスト
+
+テストピラミッドを3層で構成し、GitHub Actions(`.github/workflows/ci.yml`)で自動実行します。
+
+| 層 | 対象 | 実行 |
+|---|---|---|
+| backend 単体 / API | store層(rank算法・カスケード・採番)、seed冪等性、REST API(CRUD・バリデーション・CORS・フィルタ) | `cd backend && go test ./...` |
+| frontend 単体 / コンポーネント / フック | 純粋ロジック(rank・楽観適用・日付)、zustandストア、Radix UI操作、TanStack Query楽観的更新 | `cd frontend && npm run test`(Vitest + RTL) |
+| e2e | 起動・タスク作成・インライン編集・カンバンD&D・パレット・ショートカット・プロジェクト/メンバーCRUD・マイタスク絞り込み | `make e2e`(Playwright) |
+
+- e2eはローカルではプリインストールのChromium(`PLAYWRIGHT_CHROMIUM_PATH`)を使い、`e2e/global-setup.ts` が使い捨てDBを削除して毎回決定的にシードします。CIでは `npx playwright install` で導入します。
+- `cd frontend && npm run typecheck` でテストコードを含む型検査ができます。
 
 ## REST API
 
